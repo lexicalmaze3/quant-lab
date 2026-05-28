@@ -20,13 +20,23 @@ def run_backtest(strategy: BaseStrategy, ticker: str, start: str, end: str) -> B
     df = fetch(ticker, start, end)
     df = strategy.compute_indicators(df)
     signals = strategy.generate_signals_series(df)
-
     close = df["Close"]
-    prev = signals.shift(1).fillna(False).astype(bool)
-    entries = signals & ~prev
-    exits = ~signals & prev
 
-    pf = vbt.Portfolio.from_signals(close, entries=entries, exits=exits, freq="D")
+    if isinstance(signals, tuple):
+        entries_long, exits_long, entries_short, exits_short = signals
+        pf = vbt.Portfolio.from_signals(
+            close=close,
+            entries=entries_long,
+            exits=exits_long,
+            short_entries=entries_short,
+            short_exits=exits_short,
+            freq="D",
+        )
+    else:
+        prev = signals.shift(1).fillna(False).astype(bool)
+        entries = signals & ~prev
+        exits = ~signals & prev
+        pf = vbt.Portfolio.from_signals(close, entries=entries, exits=exits, freq="D")
 
     n_trades = int(pf.trades.count())
     try:
