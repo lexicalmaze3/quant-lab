@@ -8,11 +8,36 @@ START = "2010-01-01"
 END = "2024-01-01"
 
 pairs = [
+    # Original set
     ("XLF", "XLK"),
     ("GLD", "SLV"),
     ("KO", "PEP"),
     ("XOM", "CVX"),
     ("RTX", "NOC"),
+    # Banks
+    ("JPM", "BAC"),
+    ("GS", "MS"),
+    # Semiconductors
+    ("AMD", "NVDA"),
+    ("INTC", "AMD"),
+    # Big tech
+    ("MSFT", "GOOGL"),
+    ("META", "GOOGL"),
+    # Energy ETFs
+    ("XLE", "XOP"),
+    ("MPC", "VLO"),
+    # Retail
+    ("WMT", "TGT"),
+    ("MCD", "YUM"),
+    # Pharma
+    ("JNJ", "PFE"),
+    ("MRK", "ABBV"),
+    # Airlines
+    ("DAL", "UAL"),
+    # Gold miners ETFs
+    ("GDX", "GDXJ"),
+    # S&P 500 trackers (should be near-perfectly cointegrated)
+    ("SPY", "IVV"),
 ]
 
 
