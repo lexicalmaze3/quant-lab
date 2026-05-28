@@ -5,7 +5,9 @@ from strategies import BaseStrategy
 
 
 class BreakoutStrategy(BaseStrategy):
-    def __init__(self, params: dict = {}):
+    def __init__(self, params=None):
+        if params is None:
+            params = {}
         self.channel_period = params.get("channel_period", 20)
         self.volume_period = params.get("volume_period", 20)
         self.volume_multiplier = params.get("volume_multiplier", 1.5)

@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-import pandas as pd
 import vectorbt as vbt
 
 from core.data import fetch
@@ -33,7 +32,7 @@ def run_backtest(strategy: BaseStrategy, ticker: str, start: str, end: str) -> B
             freq="D",
         )
     else:
-        prev = signals.shift(1).fillna(False).astype(bool)
+        prev = signals.shift(1, fill_value=False)
         entries = signals & ~prev
         exits = ~signals & prev
         pf = vbt.Portfolio.from_signals(close, entries=entries, exits=exits, freq="D")

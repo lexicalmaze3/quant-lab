@@ -10,7 +10,9 @@ from strategies import BaseStrategy
 
 
 class StatArbStrategy(BaseStrategy):
-    def __init__(self, params: dict = {}):
+    def __init__(self, params=None):
+        if params is None:
+            params = {}
         self.ticker_a = params.get("ticker_a", "RTX")
         self.ticker_b = params.get("ticker_b", "NOC")
         self.lookback = params.get("lookback", 60)

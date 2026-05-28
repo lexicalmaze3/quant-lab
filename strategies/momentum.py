@@ -6,7 +6,9 @@ from strategies import BaseStrategy
 
 
 class MomentumStrategy(BaseStrategy):
-    def __init__(self, params: dict = {}):
+    def __init__(self, params=None):
+        if params is None:
+            params = {}
         self.fast_period = params.get("fast_period", 20)
         self.slow_period = params.get("slow_period", 50)
         self.atr_period = params.get("atr_period", 14)

@@ -6,7 +6,9 @@ from strategies import BaseStrategy
 
 
 class MeanReversionStrategy(BaseStrategy):
-    def __init__(self, params: dict = {}):
+    def __init__(self, params=None):
+        if params is None:
+            params = {}
         self.bb_period = params.get("bb_period", 20)
         self.rsi_period = params.get("rsi_period", 14)
         self.rsi_entry = params.get("rsi_entry", 35)
