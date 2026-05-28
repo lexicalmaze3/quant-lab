@@ -1,7 +1,6 @@
 from datetime import date, timedelta
 
 import pandas as pd
-import statsmodels.api as sm
 from statsmodels.tsa.stattools import coint
 
 from core.data import fetch
@@ -22,8 +21,10 @@ class StatArbStrategy(BaseStrategy):
     def compute_indicators(self, df: pd.DataFrame) -> pd.DataFrame:
         df = df.copy()
 
-        X = sm.add_constant(df["Close_B"])
-        hedge_ratio = sm.OLS(df["Close_A"], X).fit().params["Close_B"]
+        # Rolling OLS: β = Cov(A,B) / Var(B) — uses only past `lookback` observations at each point
+        cov = df["Close_A"].rolling(self.lookback).cov(df["Close_B"])
+        var_b = df["Close_B"].rolling(self.lookback).var()
+        hedge_ratio = cov / var_b
 
         _, pvalue, _ = coint(df["Close_A"], df["Close_B"])
 
